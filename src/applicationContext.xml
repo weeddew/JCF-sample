@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jcfquery="http://www.daewoobrenic.co.kr/schema/jcfquery"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/jee
+		http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.daewoobrenic.co.kr/schema/jcfquery
+		http://www.daewoobrenic.co.kr/schema/jcfquery/jcf-query-1.0.xsd
+	">
+
+	<context:component-scan base-package="com.bsac.adm"
+		resource-pattern="**/*.class">
+		<context:include-filter type="aspectj"
+			expression="service..*Service" />
+	</context:component-scan>
+
+
+
+	<!-- ========================= JNDI LOOKUP ========================= -->
+	<!-- <jee:jndi-lookup id="dataSource" jndi-name="jdbc/nhyuDB"/> -->
+
+	<!-- ========================= RESOURCE DEFINITIONS ========================= -->
+
+	<bean autowire-candidate="true" name="commonDao" class="system.dao.CommonDAO">
+		<property name="queryExecutor" ref="queryExecutor" />
+	</bean>
+
+
+	<context:property-placeholder location="classpath:/app.properties" />
+
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}">
+	</bean>
+
+
+	<jcfquery:query-config id="queryExecutor"
+		datasource="dataSource" template-engine-type="IBATIS"
+		ibatis-sqlmap-client="sqlMapClient" />
+
+
+
+	<bean id="sqlMapClient" class="jcf.query.loader.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:/sqlmap-config.xml" />
+		<property name="mappingLocations" value="classpath:/business/**/sqlmap/*.xml" />
+		<property name="dataSource" ref="dataSource" />
+
+	</bean>
+
+
+
+	<bean class="jcf.context.spring.SpringContextHolder" />
+
+	<!-- TX 설정 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+		<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.bsac.adm..*Service.*(..))" />
+	</aop:config>
+
+
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<!-- TX 설정 -->
+
+	<bean id="fileTransmissionOperator" class="jcf.fileupload.TransmissionOperator">
+		<property name="maxUploadSize" value="1000000000" />
+		<property name="uploadEventListeners">
+			<list>
+				<bean class="jcf.sua.mvc.file.DefaultUploadEventHandler" />
+			</list>
+		</property>
+		<property name="persistenceManager" ref="filePersistenceManager" />
+	</bean>
+
+	<bean id="filePersistenceManager" class="jcf.fileupload.file.FilePersistenceManager">
+		<property name="baseDirectory" value="c:/temp" />
+	</bean>
+
+
+
+	<bean id="messageSourceAccessor"
+		class="org.springframework.context.support.MessageSourceAccessor">
+		<constructor-arg ref="messageSource" />
+	</bean>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>WEB-INF/messages/message</value>
+			</list>
+
+		</property>
+		<property name="cacheSeconds" value="5" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+
+	<bean id="leaveaTrace" class="egovframework.rte.fdl.cmmn.trace.LeaveaTrace">
+		<property name="traceHandlerServices">
+			<list>
+				<ref bean="traceHandlerService" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="traceHandlerService" 	class="egovframework.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager">
+		<property name="patterns">
+			<list>
+				<value>*</value>
+			</list>
+		</property>
+		<property name="handlers">
+			<list>
+				<ref bean="defaultTraceHandler" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="defaultTraceHandler"
+		class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" />
+
+
+</beans>

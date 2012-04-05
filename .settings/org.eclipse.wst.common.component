@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+<wb-module deploy-name="jcf-edu">
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+        <wb-resource deploy-path="/" source-path="/Web"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/sqlmap"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/dao"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+<property name="context-root" value="jcf-edu"/>
+<property name="java-output-path"/>
+</wb-module>
+</project-modules>

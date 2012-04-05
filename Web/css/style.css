@@ -1,0 +1,40 @@
+BODY     {FONT-SIZE: 9pt; 
+			COLOR: #333333; 
+			FONT-FAMILY: ±¼¸²
+			scrollbar-face-color: silver;
+			SCROLLBAR-FACE-COLOR: #FEFEFC;
+			SCROLLBAR-HIGHLIGHT-COLOR: #F6F6F6;
+			SCROLLBAR-SHADOW-COLOR: #D3D3D3;
+			SCROLLBAR-3DLIGHT-COLOR: #CDCDCD;
+			SCROLLBAR-ARROW-COLOR: #CDDFE2;
+			SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+		}
+		
+		
+/* ±âº» ¸µÅ©  */
+A:link    {text-decoration:none; color:#666666;}
+A:visited {text-decoration:none; color:#666666;} 
+A:hover   {text-decoration:none; color:#666666;}		
+
+.input  {BORDER-RIGHT: #AAAAAA 1px solid; BORDER-TOP: #AAAAAA 1px solid; FONT-SIZE: 9pt; 
+          BORDER-LEFT: #AAAAAA 1px solid; BORDER-BOTTOM: #AAAAAA 1px solid; FONT-FAMILY: 
+		  "µ¸À½"; COLOR:#666666; HEIGHT: 18px; BACKGROUND-COLOR: #ffffff;}
+		  
+.select  {BORDER-RIGHT: #AAAAAA 1px solid; BORDER-TOP: #AAAAAA 1px solid; FONT-SIZE: 9pt; 
+          BORDER-LEFT: #AAAAAA 1px solid; BORDER-BOTTOM: #AAAAAA 1px solid; FONT-FAMILY: 
+		  "µ¸À½"; COLOR:#666666; HEIGHT: 19px; BACKGROUND-COLOR: #ffffff;
+		  scrollbar-arrow-color:#0A0A0A; scrollbar-base-color:#6D8693;
+          scrollbar-shadow-color:#F0F0F0; scrollbar-face-color:#F0F0F0;
+          scrollbar-highlight-color:#F0F0F0; scrollbar-dark-shadow-color:F0F0F0;
+          scrollbar-3d-light-color:#F0F0F0;}
+
+.textarea  {BORDER-RIGHT: #AAAAAA 1px solid; BORDER-TOP: #AAAAAA 1px solid; 
+            FONT-SIZE: 9pt; BORDER-LEFT: #AAAAAA 1px solid; BORDER-BOTTOM: #AAAAAA 1px solid; 
+            FONT-FAMILY: "µ¸¿ò"; COLOR:#666666; BACKGROUND-COLOR: #ffffff;
+            scrollbar-face-color:#FFFFFF; scrollbar-highlight-color: AAAAAA;
+            scrollbar-3dlight-color: #FFFFFF; scrollbar-shadow-color: AAAAAA;
+            scrollbar-darkshadow-color: #FFFFFF; scrollbar-track-color: #F4F4F4;
+            scrollbar-arrow-color: AAAAAA;}
+TD       {FONT-SIZE: 9pt; COLOR: #666666; FONT-FAMILY: "µ¸¿ò"; line-height:16px;}
+TH       {FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: "µ¸¿ò"; line-height:16px; BACKGROUND-COLOR: orange;}
+.td      {font-family: "µ¸¿ò"; font-size: 9pt; color:#666666; text-align: justify;}                     
